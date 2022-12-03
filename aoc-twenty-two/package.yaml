@@ -21,6 +21,9 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- safe-exceptions
+- bytestring
+- text
 
 ghc-options:
 - -Wall
@@ -45,7 +48,9 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - optparse-applicative
     - aoc-twenty-two
+
 
 tests:
   aoc-twenty-two-test:
@@ -56,4 +61,9 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - hedgehog
+    - tasty-discover  >= 4.2.2
+    - tasty-hspec >= 1.2 
+    - tasty 
+    - hspec
     - aoc-twenty-two
