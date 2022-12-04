@@ -1,4 +1,4 @@
-module AOC.Day1 where
+module AOC.Day1 (run, solve) where
 
 import qualified Data.List.Split as S
 import Data.Text (Text)
@@ -9,7 +9,9 @@ import Data.Text.Read
 run :: IO ()
 run = do
   input <- TIO.readFile "data/day1.txt"
-  print $ solve input
+  case solve input of
+    Left err -> print err
+    Right n -> print n
 
 solve :: Text -> Either String Int
 solve input = do
