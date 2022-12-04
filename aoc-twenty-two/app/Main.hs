@@ -10,7 +10,9 @@ data Options = Options
   }
 
 parseOpts :: Parser Options
-parseOpts = Options <$> switch (long "day1" <> help "Run day 1")
+parseOpts =
+  Options
+    <$> switch (long "day1" <> help "Run day 1")
 
 main :: IO ()
 main = execParser opts >>= run
