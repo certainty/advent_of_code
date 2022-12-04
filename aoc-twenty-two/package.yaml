@@ -25,6 +25,11 @@ dependencies:
 - bytestring
 - text
 
+default-extensions:
+- OverloadedStrings
+- RecordWildCards
+- LambdaCase
+
 ghc-options:
 - -Wall
 - -Wcompat
@@ -38,6 +43,8 @@ ghc-options:
 
 library:
   source-dirs: src
+  dependencies:
+    - split
 
 executables:
   aoc-twenty-two-exe:
