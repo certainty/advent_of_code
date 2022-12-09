@@ -1,36 +1,52 @@
-module AOC.Day2 (part1) where
+module AOC.Day2 (run, part1, part2) where
 
 import Data.Text (Text)
 import Data.Text qualified as T
+import Data.Text.IO qualified as TIO
 
 data Hand = Rock | Paper | Scissors deriving (Ord, Enum, Eq, Show)
+data Result = Win | Lose | Draw deriving (Eq, Show)
+
+
+run :: IO ()
+run = do
+  input <- TIO.readFile "data/day2.txt"
+  print $ part1 input
+  print $ part2 input
 
 part1 :: Text -> Maybe Int
-part1 input = do
-  rounds <- parse input
+part1 = evaluateInput lineDecoderPart1 
+
+part2 :: Text -> Maybe Int
+part2 = evaluateInput lineDecoderPart2 
+
+type LineDecoder = ((Text, Text) -> Maybe (Hand, Hand))
+ 
+
+evaluateInput :: LineDecoder -> Text -> Maybe Int
+evaluateInput decoder input = do
+  rounds <- decodeInput decoder input
   pure (sum $ scoreRound <$> rounds)
 
-parse :: Text -> Maybe [(Hand, Hand)]
-parse input = traverse parseLine (T.lines $ input)
 
--- A line is two characters
--- The left character is player A
--- The right character is player B
--- Each character encodes a hand
--- A, X => Rock
--- B, Y => Paper
--- C, Z => Scissors
-parseLine :: Text -> Maybe (Hand, Hand)
-parseLine line = do
+decodeInput :: LineDecoder -> Text -> Maybe [(Hand, Hand)]
+decodeInput decoder input = traverse (decodeLine decoder) (T.lines $ input)
+
+decodeLine :: LineDecoder -> Text -> Maybe (Hand, Hand)
+decodeLine decoder line = do
   case T.words line of
-    [left, right] -> do
-      leftHand <- parseHand left
-      rightHand <- parseHand right
-      pure (leftHand, rightHand)
+    [other, me] -> decoder (other, me)
     _ -> Nothing
-  where
-    parseHand :: Text -> Maybe Hand
-    parseHand = \case
+
+
+lineDecoderPart1 :: LineDecoder 
+lineDecoderPart1 (other, me) = do
+  otherHand <- decodeHandPart1 other
+  myHand <- decodeHandPart1 me
+  pure (otherHand, myHand)
+
+decodeHandPart1 :: Text -> Maybe Hand
+decodeHandPart1 = \case
       "A" -> Just Rock
       "X" -> Just Rock
       "B" -> Just Paper
@@ -38,6 +54,38 @@ parseLine line = do
       "C" -> Just Scissors
       "Z" -> Just Scissors
       _ -> Nothing
+
+
+lineDecoderPart2 :: LineDecoder 
+lineDecoderPart2 (other, me) = do
+  otherHand <- decodeHandPart1 other
+  expectedResult <- decodeExpectedResult me
+  let myHand = chooseMyHand expectedResult otherHand
+  pure (otherHand, myHand)
+
+decodeExpectedResult :: Text -> Maybe Result
+decodeExpectedResult = \case
+      "X" -> Just Lose
+      "Y" -> Just Draw
+      "Z" -> Just Win
+      _ -> Nothing
+
+chooseMyHand :: Result -> Hand -> Hand
+chooseMyHand Lose = chooseLosing 
+chooseMyHand Win = chooseWinning 
+chooseMyHand Draw = id
+
+chooseWinning :: Hand -> Hand
+chooseWinning = \case
+  Rock -> Paper
+  Paper -> Scissors
+  Scissors -> Rock
+
+chooseLosing :: Hand -> Hand
+chooseLosing = \case
+  Rock -> Scissors
+  Paper -> Rock
+  Scissors -> Paper
 
 scoreRound :: (Hand, Hand) -> Int
 scoreRound hands@(_, me) = scoreOutcome hands + scoreHand me
@@ -48,9 +96,17 @@ scoreHand Paper = 2
 scoreHand Scissors = 3
 
 scoreOutcome :: (Hand, Hand) -> Int
-scoreOutcome (Scissors, Rock) = 6
-scoreOutcome (Rock, Paper) = 6
-scoreOutcome (Paper, Scissors) = 6
-scoreOutcome (other, me)
-  | other == me = 3
-  | otherwise = 0
+scoreOutcome =  scoreResult . evaluateRound 
+
+scoreResult :: Result -> Int
+scoreResult Win = 6
+scoreResult Draw = 3
+scoreResult Lose = 0
+
+evaluateRound :: (Hand, Hand) -> Result
+evaluateRound (Scissors, Rock) = Win 
+evaluateRound (Rock, Paper) = Win 
+evaluateRound (Paper, Scissors) = Win 
+evaluateRound (other, me)
+  | other == me = Draw 
+  | otherwise = Lose 

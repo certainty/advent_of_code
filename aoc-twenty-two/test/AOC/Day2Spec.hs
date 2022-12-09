@@ -11,6 +11,11 @@ spec_day1 :: Spec
 spec_day1 = describe "Day 2" $ do
   it "part1" $ do
     Day2.part1 fixture `shouldBe` Just 15
+    
+  it "part2" $ do
+    Day2.part2 fixture `shouldBe` Just 12
+
+
 
 fixture :: Text
 fixture = unlines ["A Y", "B X", "C Z"]
