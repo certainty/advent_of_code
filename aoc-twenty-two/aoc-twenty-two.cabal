@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9cf4d4522285cfd5d53225152ec7cd3bc561a684175a3fd4549d7b3ebbdd0d93
+-- hash: 0c65fd92bb2cdaa445b84f387638c62fffa7a442d003912be6d558e1d310ddd7
 
 name:           aoc-twenty-two
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       AOC.Day1
       AOC.Day2
       AOC.Day3
+      AOC.Day4
   other-modules:
       Paths_aoc_twenty_two
   hs-source-dirs:
@@ -77,6 +78,7 @@ test-suite aoc-twenty-two-test
       AOC.Day1Spec
       AOC.Day2Spec
       AOC.Day3Spec
+      AOC.Day4Spec
       Paths_aoc_twenty_two
   hs-source-dirs:
       test
