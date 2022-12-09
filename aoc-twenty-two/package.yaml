@@ -46,6 +46,7 @@ library:
   source-dirs: src
   dependencies:
     - split
+    - containers
 
 executables:
   aoc-twenty-two-exe:

@@ -7,8 +7,8 @@ import Test.Tasty ()
 import Test.Tasty.Hspec qualified ()
 import Prelude hiding (unlines)
 
-spec_day1 :: Spec
-spec_day1 = describe "Day 2" $ do
+spec_day2 :: Spec
+spec_day2 = describe "Day 2" $ do
   it "part1" $ do
     Day2.part1 fixture `shouldBe` Just 15
     
