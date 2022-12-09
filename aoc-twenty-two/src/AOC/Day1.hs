@@ -1,11 +1,11 @@
 module AOC.Day1 (run, solve, solvePartTwo) where
 
 import Data.List (sortOn)
-import qualified Data.List.Split as S
+import Data.List.Split qualified as S
 import Data.Ord
 import Data.Text (Text)
-import qualified Data.Text as T
-import qualified Data.Text.IO as TIO
+import Data.Text qualified as T
+import Data.Text.IO qualified as TIO
 import Data.Text.Read
 
 run :: IO ()

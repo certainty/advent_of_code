@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f4fc73849f73cf2503f25d7fdc17511326dd219c9b2ec7cfaad089641ad15637
+-- hash: 1e1e89099138a3866cbd05d3d6c80cf20bea56fd3765e08a6a8582584e305937
 
 name:           aoc-twenty-two
 version:        0.1.0.0
@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       AOC.Day1
+      AOC.Day2
   other-modules:
       Paths_aoc_twenty_two
   hs-source-dirs:
@@ -36,6 +37,7 @@ library
       OverloadedStrings
       RecordWildCards
       LambdaCase
+      ImportQualifiedPost
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
@@ -55,6 +57,7 @@ executable aoc-twenty-two-exe
       OverloadedStrings
       RecordWildCards
       LambdaCase
+      ImportQualifiedPost
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aoc-twenty-two
@@ -70,6 +73,7 @@ test-suite aoc-twenty-two-test
   main-is: Spec.hs
   other-modules:
       AOC.Day1Spec
+      AOC.Day2Spec
       Paths_aoc_twenty_two
   hs-source-dirs:
       test
@@ -77,6 +81,7 @@ test-suite aoc-twenty-two-test
       OverloadedStrings
       RecordWildCards
       LambdaCase
+      ImportQualifiedPost
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aoc-twenty-two

@@ -29,6 +29,7 @@ default-extensions:
 - OverloadedStrings
 - RecordWildCards
 - LambdaCase
+- ImportQualifiedPost
 
 ghc-options:
 - -Wall
