@@ -38,8 +38,8 @@
 
 (defun parse-game-record (record)
   (destructuring-bind (game-info set-info) (str:split ":" record)
-    (let* ((game-id (parse-integer (cadr (str:split " " game-info))))
-           (sets (str:split ";" set-info)))
+    (let ((game-id (parse-integer (cadr (str:split " " game-info))))
+          (sets (str:split ";" set-info)))
       (game game-id (mapcar #'parse-cube-set sets)))))
 
 (defun parse-cube-set (input)
