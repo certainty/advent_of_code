@@ -26,7 +26,7 @@
 
 (defun digit-name->digit (input start-pos)
   (loop for digit from 0 to 9
-        when (str:starts-with-p (format nil "~r" digit) (subseq input start-pos))
+        when (str:starts-with-p (format nil "~r" digit) (slice input start-pos))
           do (return-from digit-name->digit (format nil "~a" digit))))
 
 (define-test part-one-works ()
