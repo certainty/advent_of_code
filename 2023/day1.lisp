@@ -1,10 +1,10 @@
 (in-package :aoc.2023)
 
-(defun part-one ()
+(defun day1-part-one ()
   (loop for line in (file-lines #p"input/day1.input")
         summing (callibration-values line)))
 
-(defun part-two ()
+(defun day1-part-two ()
   (loop for line in (file-lines #p"input/day1.input")
         summing (callibration-values (convert-digit-names line))))
 
@@ -30,10 +30,10 @@
           do (return-from digit-name->digit (format nil "~a" digit))))
 
 (define-test part-one-works ()
-  (assert-equal 54697 (part-one)))
+  (assert-equal 54697 (day1-part-one)))
 
 (define-test part-two-works ()
-  (assert-equal 54885 (part-two)))
+  (assert-equal 54885 (day1-part-two)))
 
 (define-test substitution-works ()
   (assert-equal 29 (callibration-values (convert-digit-names "two1nine")))

@@ -9,4 +9,5 @@
   :components
   ((:file "packages")
    (:file "utils")
-   (:file "day1")))
+   (:file "day1")
+   (:file "day2")))
