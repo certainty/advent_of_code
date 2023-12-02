@@ -8,6 +8,18 @@
           do (incf result (game-id game))
         finally (return result)))
 
+(defun day2-part-two ()
+  (loop for line in (file-lines #p"input/day2.input")
+        for game = (parse-game-record line)
+        summing (power-of-min-set (game-sets game))))
+
+(defun power-of-min-set (sets)
+  (loop for set in sets
+        maximizing (cube-set-red set) into max-red
+        maximizing (cube-set-blue set) into max-blue
+        maximizing (cube-set-green set) into max-green
+        finally (return (* max-red max-blue max-green))))
+
 (s:defconstructor cube-set
   (red integer)
   (blue integer)
@@ -46,3 +58,6 @@
 
 (define-test day2-part-one-works ()
   (assert-equal 2685 (day2-part-one)))
+
+(define-test day2-part-two-works ()
+  (assert-equal 83707 (day2-part-two)))
