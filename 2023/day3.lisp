@@ -114,3 +114,6 @@
 
 (define-test day3-part-one-test ()
   (assert-equal 557705 (day3-part-one)))
+
+(define-test day3-part-two-test ()
+  (assert-equal 84266818 (day3-part-two)))

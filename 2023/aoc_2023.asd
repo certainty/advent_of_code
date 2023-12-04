@@ -1,6 +1,6 @@
 (in-package :asdf-user)
 
-(defsystem "aoc_2023"
+(defsystem "aoc"
   :description "Advent of code 2023:"
   :author "David Krentzlin <david.krentzlin@gmail.com>"
   :source-control (:git "https://github.com/certainty/advent_of_code.git")
@@ -11,4 +11,5 @@
    (:file "utils")
    (:file "day1")
    (:file "day2")
-   (:file "day3"))))
+   (:file "day3")
+   (:file "day4"))))
