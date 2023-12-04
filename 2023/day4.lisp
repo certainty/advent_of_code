@@ -7,8 +7,8 @@
 (defun process-line (line)
   (let ((colon (position #\: line)))
     (destructuring-bind (winning-segment my-segment) (str:split "|" (subseq line (1+ colon)))
-      (let ((winning-cards (remove-duplicates (coerce (mapcar #'parse-integer (cl-ppcre:split "\\s+" (str:trim winning-segment))) 'vector)))
-            (my-cards      (remove-duplicates (mapcar #'parse-integer (cl-ppcre:split "\\s+" (str:trim my-segment))))))
+      (let ((winning-cards (coerce (mapcar #'parse-integer (cl-ppcre:split "\\s+" (str:trim winning-segment))) 'vector))
+            (my-cards      (mapcar #'parse-integer (cl-ppcre:split "\\s+" (str:trim my-segment)))))
         ;; linear scan should be fast enough and we don't bother using a set or hashmap
         (let ((winners (loop for card in my-cards counting (s:true (find card winning-cards)))))
           (cond
