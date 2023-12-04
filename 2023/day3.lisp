@@ -5,7 +5,7 @@
 (defun day3-part-one ()
   (loop with result = 0
         with number-part-p = nil
-        with current-number = nil ; we have to put it here because digits can span multiple lines
+        with current-number = nil
         with matrix = (input-matrix)
         for row from 0 below *matrix-size*
         do (loop
@@ -55,18 +55,13 @@
 
 (defun adjacent-coordinates (row column)
   "Returns a list of valid coordinates adjacent to the given one."
-  (let ((above (1- row))
-        (below (1+ row))
-        (left (1- column))
-        (right (1+ column)))
-    `(,@(and (>= above 0) (list (list above column)))
-      ,@(and (>= above 0) (>= left 0) (list (list above left)))
-      ,@(and (>= above 0) (<= right (1- *matrix-size*)) (list (list above right)))
-      ,@(and (>= left 0) (list (list row left)))
-      ,@(and (<= right (1- *matrix-size*)) (list (list row right)))
-      ,@(and (<= below (1- *matrix-size*)) (list (list below column)))
-      ,@(and (<= below (1- *matrix-size*)) (>= left 0) (list (list below left)))
-      ,@(and (<= below (1- *matrix-size*)) (<= right (1- *matrix-size*)) (list (list below right))))))
+  (loop for (drow dcol) in '((0 1) (0 -1) (1 0) (-1 0)
+                             (-1 -1) (-1 1) (1 -1) (1 1))
+        for new-row = (+ row drow)
+        for new-col = (+ column dcol)
+        if (and (>= new-row 0) (< new-row *matrix-size*)
+                (>= new-col 0) (< new-col *matrix-size*))
+          collect (list new-row new-col)))
 
 (defun adjacent-numbers (matrix row column)
   (let ((numbers nil))
@@ -88,13 +83,9 @@
         (unless (digit-char-p (aref matrix r c))
           (return))
         (push (aref matrix r c) left)
-        (cond
-          ((and (zerop c) (zerop r))
-           (return))
-          ((zerop c)
-           (decf r)
-           (setf c (1- *matrix-size*)))
-          (t (decf c)))))
+        (when (zerop c)
+          (return))
+        (decf c)))
 
     ;; right
     (let ((r row)
@@ -103,13 +94,9 @@
         (unless (digit-char-p (aref matrix r c))
           (return))
         (push (aref matrix r c) right)
-        (cond
-          ((and (= (1- *matrix-size*) c) (>= (1+ r) *matrix-size*))
-           (return))
-          ((= (1- *matrix-size*) c)
-           (incf r)
-           (setf c 0))
-          (t (incf c)))))
+        (when (= c (1- *matrix-size*))
+          (return))
+        (incf c)))
     (parse-integer (coerce (append left (reverse right)) 'string))))
 
 (define-test day3-part-one-test ()
